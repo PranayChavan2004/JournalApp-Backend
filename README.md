@@ -43,10 +43,9 @@ Built as a hands-on deep dive into real-world backend engineering patterns: laye
 | Utilities | Lombok, ModelMapper |
 
 ---
-
 ## 🏗️ Architecture Overview
 
-\```
+```
 Client
   │
   ▼
@@ -58,7 +57,99 @@ Service Layer  ──►  UserService / JournalEntryService / WeatherService / E
   ├──► Repository Layer (Spring Data JPA)  ──►  MySQL
   ├──► RedisService  ──►  Redis (weather cache)
   └──► UserScheduler  ──►  Kafka Producer ──► SentimentConsumerService ──► EmailService
-\```
+```
+
+---
+
+## 📁 Project Structure
+
+```
+JournalApp/
+├── mvnw, mvnw.cmd                     # Maven wrapper scripts
+├── pom.xml                            # Project dependencies & build config
+│
+├── src/
+│   ├── main/
+│   │   ├── java/com/projectbyPranayChavan/JournalApp/
+│   │   │   ├── JournalAppApplication.java     # Main entry point
+│   │   │   │
+│   │   │   ├── api/response/
+│   │   │   │   └── WeatherResponse.java       # External weather API DTO
+│   │   │   │
+│   │   │   ├── cache/
+│   │   │   │   └── AppCache.java              # In-memory config cache
+│   │   │   │
+│   │   │   ├── config/
+│   │   │   │   ├── RedisConfig.java           # Redis bean configuration
+│   │   │   │   ├── SpringSecurity.java        # Security filter chain, auth provider
+│   │   │   │   └── SwaggerConfig.java         # OpenAPI / Swagger setup
+│   │   │   │
+│   │   │   ├── constants/
+│   │   │   │   └── Placeholders.java          # Static placeholder strings
+│   │   │   │
+│   │   │   ├── controller/
+│   │   │   │   ├── AdminController.java       # Admin-only endpoints
+│   │   │   │   ├── GoogleAuthController.java  # Google OAuth2 callback
+│   │   │   │   ├── JournalController.java     # Journal CRUD (auth required)
+│   │   │   │   ├── JournalEntryController.java# Practice/in-memory CRUD demo
+│   │   │   │   ├── PublicController.java      # Signup, login, health-check
+│   │   │   │   └── UserController.java        # User profile & weather endpoint
+│   │   │   │
+│   │   │   ├── dto/
+│   │   │   │   └── UserDTO.java                # Signup request payload
+│   │   │   │
+│   │   │   ├── entities/
+│   │   │   │   ├── ConfigJournalAppEntity.java # App config key-value table
+│   │   │   │   ├── JournalEntry.java           # Journal entry entity
+│   │   │   │   └── User.java                   # User entity
+│   │   │   │
+│   │   │   ├── enums/
+│   │   │   │   └── Sentiment.java              # HAPPY / SAD / ANGRY / ANXIOUS
+│   │   │   │
+│   │   │   ├── filter/
+│   │   │   │   └── JwtFilter.java              # Validates JWT on each request
+│   │   │   │
+│   │   │   ├── model/
+│   │   │   │   └── SentimentData.java          # Kafka message payload
+│   │   │   │
+│   │   │   ├── repository/
+│   │   │   │   ├── ConfigJournalAppRepository.java
+│   │   │   │   ├── JournalEntryRepository.java
+│   │   │   │   ├── UserRepository.java
+│   │   │   │   └── UserRepositoryImpl.java     # Custom query implementation
+│   │   │   │
+│   │   │   ├── scheduler/
+│   │   │   │   └── UserScheduler.java          # Weekly sentiment cron + cache refresh
+│   │   │   │
+│   │   │   ├── service/
+│   │   │   │   ├── EmailService.java           # SMTP email sending
+│   │   │   │   ├── JournalEntryService.java    # Journal business logic
+│   │   │   │   ├── QuotesService.java          # (placeholder)
+│   │   │   │   ├── RedisService.java           # Generic Redis get/set helper
+│   │   │   │   ├── SentimentConsumerService.java # Kafka listener
+│   │   │   │   ├── UserDetailsServiceImpl.java # Spring Security UserDetailsService
+│   │   │   │   ├── UserService.java            # User business logic
+│   │   │   │   └── WeatherService.java         # Weather API + Redis cache lookup
+│   │   │   │
+│   │   │   └── utils/
+│   │   │       └── JwtUtils.java               # JWT generation & validation
+│   │   │
+│   │   └── resources/
+│   │       ├── application.yaml               # Base config (active profile selector)
+│   │       ├── application-dev.yaml           # Dev profile (DB, Redis, Kafka, mail)
+│   │       ├── application-test.yaml          # Test profile
+│   │       ├── application-prod.yaml          # Production profile
+│   │       └── logback.xml                    # Logging configuration
+│   │
+│   └── test/
+│       └── java/com/projectbyPranayChavan/JournalApp/
+│           └── JournalAppApplicationTests.java
+│
+├── .gitignore
+└── README.md
+```
+
+---
 
 ## 👤 Author
 
