@@ -1,0 +1,12 @@
+server:
+  port: 1310
+
+spring:
+  application:
+    name: JournalApp
+
+  # profiles.active is used to active phases like here we provided dev phase now
+  #  the control given to the application-dev.yaml port no 8080 will be used that means we are in development phase and
+  #  using the properties inside application-dev.yaml
+  profiles:
+    active: dev

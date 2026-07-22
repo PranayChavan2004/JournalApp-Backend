@@ -1,0 +1,96 @@
+# Development Profile --> used by development team
+
+server:
+  port: 8080
+
+#  database connections
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/Journal_App
+    username: root
+    password: xxxx
+
+  server:
+    port: ${SERVER_PORT}
+    servlet:
+      context-path: /journal
+
+    # kafka configuration
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.projectbyPranayChavan.JournalApp.model
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='X' password='X';
+      session:
+        timeout:
+          ms: 45000
+
+    # redis configuration
+    # when we are working on real company project we dont use localhost we use AWS, Cloud to
+#    store data hence we need redis cloud url for that hence here we are using localhost so everytime when
+#    we open our project we also need to run redis on wsl but if we use cloud then cloud will manage
+#    this things we dont need to do anaything do reload no run wsl
+  redis:
+    data:
+      host: ${REDIS_HOST}
+      port: 6379
+      password: ${REDIS_PASSWORD}
+
+  # to send mail by using springboot code
+  mail:
+    host: smtp.gmail.com    # mail provider this is for Gmail
+    port: 587
+    username: abc@gmail.com
+    password: ${JAVA_EMAIL_PASSWORD}   # password created using App Password on Google account
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+  #  Hikari properties for maintaining and managing db connections
+  #    hikari:
+  #      pool-name: HikariCP
+  #      maximum-pool-size: 5
+  #      connection-timeout: 10000
+  #      idle-timeout: 600000
+  #      max-lifetime: 1800000
+  #      validation-timeout: 1800000
+  #      leak-detection-threshold: 0
+  #      initialization-fail-timeout: -1
+
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+    show-sql: true
+
+
+
+
+# weather api key is used to access the services from weatherApp to display weather details wihtout this when we hit end point weatherApp denied access
+weather:
+  api:
+    key: ${WEATHER_API_KEY}
