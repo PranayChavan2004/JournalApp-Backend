@@ -1,4 +1,4 @@
-# 📔 JournalApp — Secure Journaling App with Mood Insights
+# JournalApp — Secure Journaling App with Mood Insights
 
 A production-style **Spring Boot** application that lets users keep a private, authenticated journal, tag every entry with a mood, receive a weekly mood summary by email and see the weather for their city. It ships with its own responsive web interface and is backed by MySQL, Redis, Kafka and JWT-secured Spring Security.
 
@@ -6,7 +6,7 @@ Built as a hands-on deep dive into real-world backend engineering patterns: laye
 
 ---
 
-## 🚀 Features
+## Features
 
 - **JWT Authentication** — stateless login/signup with `USER` / `ADMIN` roles
 - **Google OAuth2 Login** — sign in with Google, new users auto-created
@@ -22,7 +22,7 @@ Built as a hands-on deep dive into real-world backend engineering patterns: laye
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -42,7 +42,7 @@ Built as a hands-on deep dive into real-world backend engineering patterns: laye
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ```
 Browser UI / API Client
@@ -62,7 +62,7 @@ Google Sign-In:  Browser ──► Google ──► OAuth2LoginSuccessHandler �
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 JournalApp/
@@ -181,7 +181,7 @@ JournalApp/
 
 ---
 
-## 👤 Author
+## Author
 
 **Pranay Chavan**
 
